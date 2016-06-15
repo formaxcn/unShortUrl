@@ -1,0 +1,14 @@
+{
+"manifest_version":2,
+
+"name":"Url Unshort",
+"description":"Get the short Url back.",
+"version":"0.1",
+"permissions":[
+    "https://*/*",
+    "http://*/*"
+    ],
+"icons": {
+      "128": "link-chain-512.png"
+   }
+}
