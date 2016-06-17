@@ -1,14 +1,17 @@
 {
-"manifest_version":2,
+	"manifest_version":2,
 
-"name":"Url Unshort",
-"description":"Get the short Url back.",
-"version":"0.1",
-"permissions":[
-    "https://*/*",
-    "http://*/*"
-    ],
-"icons": {
-      "128": "link-chain-512.png"
-   }
+	"name":"Url Unshort",
+	"description":"Get the short Url back.",
+	"version":"0.1",
+	"icons": {
+		  "128": "link-chain-512.png"
+	},
+	"content_scripts": [ {
+      "js": [ "libs/jquery.js","libs/web-preview.js","content.js" ],
+      "matches": [
+		"https://*/*",
+		"http://*/*"
+		]
+   } ]
 }
