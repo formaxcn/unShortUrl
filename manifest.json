@@ -9,6 +9,7 @@
 	},
 	"content_scripts": [ {
       "js": [ "libs/jquery.js","libs/web-preview.js","content.js" ],
+	  "css": ["libs/livepreview.css"],
       "matches": [
 		"https://*/*",
 		"http://*/*"

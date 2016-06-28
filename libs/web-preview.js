@@ -33,8 +33,8 @@
              targetWidth : 1000,
              targetHeight: 800,
              viewWidth: 300,
-             viewHeight: 200,
-             position: 'right',
+             viewHeight: 100,
+             position: 'bottom',
              positionOffset: 40,
          };
 
@@ -57,13 +57,12 @@
          
          var showPreview = function(event) {
              var triggerType = event.data.triggerType;
-			 var GOOGLE_ADDRESS="https://urlshort-1342.appspot.com/?url=";
-			 var SINA_ADDRESS="https://tzhbingpic.sinaapp.com/unshortUrl.php?url=";
              var obj = event.data.target;
-             var href = GOOGLE_ADDRESS+event.data.href;
+             var href = event.data.href;
+			 //href="https://www.bing.com";
              var s = event.data.scale;
              
-             if( (triggerType == 'click') && href.length>20 ) {
+             if( (triggerType == 'click') && ($('#' + preview_id).length == 0) ) {
                  event.preventDefault();
              }
 
@@ -98,9 +97,25 @@
                 toppos = pos.top + (height/2) + currentOffset;
              }
              
-             //hover on 
-             $('body').append('<div id="livepreview_dialog" class="' + currentPos + '" style="display:none; padding:0px; left: ' + leftpos + 'px; top:' + toppos + 'px; width: ' + '200' + 'px; height: ' + '100' + 'px"><div class="livepreview-container" style="overflow:hidden; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><iframe id="livepreview_iframe" src="' + 'https://www.bing.com' + '" style="height:' + '100' + 'px; width:' + '200' + 'px;-moz-transform: scale('+ s + ');-moz-transform-origin: 0 0;-o-transform: scale('+ s + ');-o-transform-origin: 0 0;-webkit-transform: scale('+ s + ');-webkit-transform-origin: 0 0;"></iframe></div></div>');
-             $('#' + preview_id).fadeIn(100);
+			 
+				var GOOGLE_ADDRESS="https://urlshort-1342.appspot.com/?url=";
+				var SINA_ADDRESS="https://tzhbingpic.sinaapp.com/unshortUrl.php?url=";
+				var realhref=GOOGLE_ADDRESS+href;
+		var dataurl="";
+				$.ajax({
+        type : "GET",
+        url : realhref,
+        success : function (dataurl) {
+			if(dataurl!=""){
+				$('body').append('<div id="livepreview_dialog" class="' + currentPos + '" style="display:none; padding:0px; left: ' + leftpos + 'px; top:' + toppos + 'px; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><div class="livepreview-container" style="overflow:hidden; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px">'+dataurl+'</div></div>');
+			}
+            $('#' + preview_id).fadeIn(100);
+            dataurl=""; 
+        }
+    });
+				 //hover on 
+             
+             
          };
 
          return this.each(function() {
