@@ -25,6 +25,7 @@
  * ========================================================== */
 
 (function($) {
+	var timeCnt;
   $.fn.extend({
      livePreview: function(options) {
          
@@ -101,20 +102,25 @@
 				var GOOGLE_ADDRESS="https://urlshort-1342.appspot.com/?url=";
 				var SINA_ADDRESS="https://tzhbingpic.sinaapp.com/unshortUrl.php?url=";
 				var realhref=GOOGLE_ADDRESS+href;
+				timeCnt=setTimeout(function(){
 		var dataurl="";
 				$.ajax({
         type : "GET",
         url : realhref,
         success : function (dataurl) {
-			if(dataurl!=""){
+			if(dataurl!="")
+			{
+				//
 				$('body').append('<div id="livepreview_dialog" class="' + currentPos + '" style="display:none; padding:0px; left: ' + leftpos + 'px; top:' + toppos + 'px; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><div class="livepreview-container" style="overflow:hidden; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px">'+dataurl+'</div></div>');
-			}
+			//},2000);
             $('#' + preview_id).fadeIn(100);
-            dataurl=""; 
+		dataurl="";
         }
+		}
+				
     });
 				 //hover on 
-             
+		 },2000); 
              
          };
 
@@ -133,12 +139,14 @@
                 triggerType = 'mouseenter';
                 obj.on('click', function() {
                     $('#' + preview_id).remove();
+					clearTimeout(timeCnt);
                 });
             }
             
             obj.on(triggerType, null, { triggerType: triggerType, target: obj, href: href, scale: s }, showPreview);
             obj.on('mouseleave', function() {
                 $('#' + preview_id).remove();
+				clearTimeout(timeCnt);
             });
 
          });
